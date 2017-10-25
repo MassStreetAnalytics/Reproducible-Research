@@ -32,11 +32,8 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 
-# Data Files
-.csv
-
 #Jupyter Output
-*/.ipynb_checkpoints/*
-Analysis/metastore_db/*
+*-checkpoint.ipynb
+**/metastore_db
 derby.log
-Analysis/Tidyverse/.ipynb_checkpoints/*
+
