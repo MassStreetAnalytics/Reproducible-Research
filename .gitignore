@@ -34,3 +34,8 @@ vignettes/*.pdf
 
 # Data Files
 .csv
+
+#Jupyter Output
+/.ipynb_checkpoints/
+/metastore_db/*
+derby.log
