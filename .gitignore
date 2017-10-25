@@ -36,6 +36,7 @@ vignettes/*.pdf
 .csv
 
 #Jupyter Output
-/.ipynb_checkpoints/
-/metastore_db/*
+*/.ipynb_checkpoints/*
+Analysis/metastore_db/*
 derby.log
+Analysis/Tidyverse/.ipynb_checkpoints/*
