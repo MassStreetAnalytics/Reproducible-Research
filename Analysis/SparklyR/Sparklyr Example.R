@@ -9,13 +9,12 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 #spark_install("2.2.0")
 library(tidyverse)
 library(sparklyr)
-library(Amelia)
-library(replyr)
+library(replyr) #This package has a dependency on wrapr
 sc = spark_connect(master="local") #This is NOT a Spark Context!
 
-titanic_train = spark_read_csv(sc, name="titanic_train", path="../Data/titanic_train.csv", header = TRUE, delimiter = ",", quote = "\"", escape = "\\", charset = "UTF-8", null_value = NULL, repartition = 0, memory = TRUE, overwrite = TRUE)
+titanic_train = spark_read_csv(sc, name="titanic_train", path="../../Data/titanic_train.csv", header = TRUE, delimiter = ",", quote = "\"", escape = "\\", charset = "UTF-8", null_value = NULL, repartition = 0, memory = TRUE, overwrite = TRUE)
 
-replyr_summary(titanic_train)
+#replyr_summary(titanic_train)
 
 spark_disconnect(sc)
 
