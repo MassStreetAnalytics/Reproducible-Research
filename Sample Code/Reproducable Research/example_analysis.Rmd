@@ -1,3 +1,8 @@
+---
+output:
+  html_document: default
+  pdf_document: defaultb #Actually won't knit to PDF on my machine
+---
 # Decreases in Fine Particle Air Pollution Between 1999 and 2012
 
 ## Synopsis
@@ -16,10 +21,9 @@ We first read in the 1999 data from the raw text file included in the zip archiv
 
 
 ```{r read 1999 data,cache=TRUE,tidy=FALSE}
-pm0 <- read.table("pm25_data/RD_501_88101_1999-0.txt", comment.char = "#", 
+pm0 <- read.table("../../Data/reproduceable_research/RD_501_88101_1999-0.txt", comment.char = "#", 
                   header = FALSE, sep = "|", na.strings = "")
 ```
-a
 After reading in the 1999 we check the first few rows (there are `r format(nrow(pm0),big.mark=",")`) rows in this dataset. 
 
 ```{r check first few rows}
@@ -31,7 +35,7 @@ We then attach the column headers to the dataset and make sure that they are pro
 
 
 ```{r set column names}
-cnames <- readLines("pm25_data/RD_501_88101_1999-0.txt", 1)
+cnames <- readLines("../../Data/reproduceable_research/RD_501_88101_1999-0.txt", 1)
 cnames <- strsplit(cnames, "|", fixed = TRUE)
 names(pm0) <- make.names(cnames[[1]])  ## Ensure names are properly formatted
 head(pm0[, 1:13])
@@ -60,7 +64,7 @@ We then read in the 2012 data in the same manner in which we read the 1999 data 
 
 
 ```{r read 2012 data,cache=TRUE,tidy=FALSE}
-pm1 <- read.table("pm25_data/RD_501_88101_2012-0.txt", comment.char = "#", 
+pm1 <- read.table("../../Data/reproduceable_research/RD_501_88101_2012-0.txt", comment.char = "#", 
                   header = FALSE, sep = "|", na.strings = "", nrow = 1304290)
 ```
 
@@ -213,4 +217,8 @@ segments(rep(1, 52), mrg[, 2], rep(2, 52), mrg[, 3])
 axis(1, c(1, 2), c("1999", "2012"))
 ```
 
-From the plot above we can see that many states have decreased the average PM levels from 1999 to 2012 (although a few states actually increased their levels). 
+From the plot above we can see that many states have decreased the average PM levels from 1999 to 2012 (although a few states actually increased their levels).
+
+```{r}
+sessionInfo()
+```
