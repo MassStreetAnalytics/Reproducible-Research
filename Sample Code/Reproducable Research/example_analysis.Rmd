@@ -1,7 +1,7 @@
 ---
 output:
   html_document: default
-  pdf_document: defaultb #Actually won't knit to PDF on my machine
+  pdf_document: default #Actually won't knit to PDF on my machine
 ---
 # Decreases in Fine Particle Air Pollution Between 1999 and 2012
 

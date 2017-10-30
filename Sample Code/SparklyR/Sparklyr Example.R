@@ -4,35 +4,56 @@
 # This only works in R studio.
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
+#Install spark and sparklyr if neccessary.
+
 #This is an issue. There has to be a cleaner way to
 #manage script dependencies
-if (!require("sparklyr")) {
-  install.packages("sparklyr")  
-}
+if (!require("sparklyr")) {install.packages("sparklyr")}
+if (!require("tidyverse")) {install.packages("tidyverse")}
 
-if (!require("tidyverse")) {
-  install.packages("tidyverse")  
-}
+#Get the latest build
+#if (!require("sparklyr")) {devtools::install_github("rstudio/sparklyr")}
 
-#Install spark and sparklyr if neccessary.
-#devtools::install_github("rstudio/sparklyr")
-#spark_install("2.2.0")
+#I haven't ran this because I installed spark the hard way
+#if (!require("sparklyr")) {spark_install("2.2.0")}
+
+
 library(tidyverse)
 library(sparklyr)
-sc = spark_connect(master="local") #This is NOT a Spark Context!
+
+#This is NOT a Spark Context!
+#You interact with data via Spark SQL
+#That requires a Spark Session not a
+#Spark context.
+sc = spark_connect(master="local") 
 
 
 
 set.seed(100)
 
+#Old Way
+#tbl_import_iris = spark_read_csv(
+#sc, 
+#path = "../../Data/iris/iris_dataset.csv", 
+#col_names = TRUE, 
+#name = "import_iris", 
+#overwrite = TRUE
+#)
 
-
-tbl_import_iris = spark_read_csv(sc, path = "../../Data/iris/iris_dataset.csv", col_names = TRUE, name = "import_iris", overwrite = TRUE)
+#Construct path in a platform independent way
+tbl_import_iris = spark_read_csv(
+  sc, 
+  path = file.path("../../Data/iris","iris_dataset.csv",fsep = .Platform$file.sep), 
+  col_names = TRUE, 
+  name = "import_iris", 
+  overwrite = TRUE
+)
 
 #Split the iris data into test/train sets
 #Register the training set
 #Create an R reference object for the training set
-partition_iris <- sdf_partition(tbl_import_iris, training=0.5, testing=0.5) #sdf_partition is not actually a partition
+#sdf_partition is not actually a partition
+partition_iris <- sdf_partition(tbl_import_iris, training=0.5, testing=0.5) 
 
 #this is all done with SparkSQL so you have to give things a table name
 sdf_register(partition_iris, c("spark_iris_training", "spark_iris_test")) 
