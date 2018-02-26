@@ -38,3 +38,6 @@ vignettes/*.pdf
 **/metastore_db
 derby.log
 
+#Temp word files
+~*
+
